@@ -28,8 +28,11 @@ jobs:
       - name: Build
         run: npm run build:gh-pages
       
+      - name: List build output
+        run: ls -la dist/
+      
       - name: Copy index.html to 404.html
-        run: cp dist/famshop/browser/index.html dist/famshop/browser/404.html
+        run: cp ./dist/famshop/browser/index.html ./dist/famshop/browser/404.html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

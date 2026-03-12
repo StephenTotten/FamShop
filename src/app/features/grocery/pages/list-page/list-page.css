@@ -11,16 +11,25 @@
   padding: 0 1.5rem;
 }
 
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
 .logo {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  margin: 0;
 }
 
 .tagline {
   font-size: 0.95rem;
   opacity: 0.9;
   font-weight: 300;
+  margin: 0;
 }
 
 .main {

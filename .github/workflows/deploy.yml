@@ -31,11 +31,11 @@ jobs:
       - name: List build output
         run: |
           echo "Listing dist directory:"
-          ls -la dist/ || echo "dist/ not found"
-          echo "Listing current directory:"
-          ls -la
+          ls -la dist/
+          echo "Listing dist/famshop:"
+          ls -la dist/famshop/
           echo "Finding index.html:"
-          find . -name "index.html" -type f
+          find dist/ -name "index.html" -type f
       
       - name: Copy index.html to 404.html
         run: |

@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:gh-pages": "ng build --base-href /famshop/",
+    "build:gh-pages": "ng build --configuration production",
     "deploy": "npm run build:gh-pages && npx gh-pages -d dist/famshop/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

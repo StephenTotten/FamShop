@@ -1,58 +1,57 @@
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage';
-import { List } from '../models/list.model';
+import { GroceryRepository } from '../repositories/grocery.repository';
 import { Item } from '../models/item.model';
+import { List } from '../models/list.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListService {
 
-  private LIST_KEY = 'famshop_lists';
-  private ITEM_KEY = 'famshop_items';
-
-  constructor(private storage: StorageService) {}
+  constructor(private repo: GroceryRepository) {}
 
   getLists(): List[] {
-    return this.storage.get<List[]>(this.LIST_KEY) || [];
+    return this.repo.getLists();
   }
 
   addList(list: List) {
-    const lists = this.getLists();
+    const lists = this.repo.getLists();
     lists.push(list);
-    this.storage.set(this.LIST_KEY, lists);
-  }
-
-  getItems(): Item[] {
-    return this.storage.get<Item[]>(this.ITEM_KEY) || [];
+    this.repo.saveLists(lists);
   }
 
   getItemsForList(listId: string): Item[] {
-    return this.getItems().filter(i => i.listId === listId);
+    return this.repo.getItems().filter(i => i.listId === listId);
   }
 
   addItem(item: Item) {
-    const items = this.getItems();
+    const items = this.repo.getItems();
     items.push(item);
-    this.storage.set(this.ITEM_KEY, items);
+    this.repo.saveItems(items);
   }
 
   toggleItem(id: string) {
-    const items = this.getItems();
+
+    const items = this.repo.getItems();
 
     const item = items.find(i => i.id === id);
+
     if (item) {
       item.inCart = !item.inCart;
     }
 
-    this.storage.set(this.ITEM_KEY, items);
+    this.repo.saveItems(items);
+
   }
 
   deleteInCartItems(listId: string) {
-    const items = this.getItems()
+
+    const items = this.repo
+      .getItems()
       .filter(i => !(i.listId === listId && i.inCart));
 
-    this.storage.set(this.ITEM_KEY, items);
+    this.repo.saveItems(items);
+
   }
 
 }

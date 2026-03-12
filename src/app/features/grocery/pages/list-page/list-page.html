@@ -1,38 +1,51 @@
-<h1>FamShop</h1>
+<header class="header">
+  <div class="container">
+    <h1 class="logo">🛒 FamShop</h1>
+    <p class="tagline">Your family grocery list</p>
+  </div>
+</header>
 
-<div>
+<main class="main">
+  <div class="container">
+    <div class="add-item-section">
+      <input
+        [(ngModel)]="newItem"
+        placeholder="Add grocery item..."
+        class="item-input"
+        (keyup.enter)="addItem()"
+      />
+      <button (click)="addItem()" class="btn btn-primary">
+        Add Item
+      </button>
+    </div>
 
-  <input
-    [(ngModel)]="newItem"
-    placeholder="Add grocery item"
-  />
+    <div class="items-section">
+      <ul class="items-list">
+        <li *ngFor="let item of items" class="item" [class.in-cart]="item.inCart">
+          <label class="item-label">
+            <input
+              type="checkbox"
+              [checked]="item.inCart"
+              (change)="toggleItem(item.id)"
+              class="item-checkbox"
+            />
+            <span class="item-name">
+              {{ item.name }}
+            </span>
+          </label>
+        </li>
+      </ul>
 
-  <button (click)="addItem()">
-    Add
-  </button>
+      <div *ngIf="items.length === 0" class="empty-state">
+        <p>No items yet. Add your first grocery item above!</p>
+      </div>
 
-</div>
-
-<hr>
-
-<ul>
-
-  <li *ngFor="let item of items">
-
-    <input
-      type="checkbox"
-      [checked]="item.inCart"
-      (change)="toggleItem(item.id)"
-    />
-
-    <span [style.text-decoration]="item.inCart ? 'line-through' : 'none'">
-      {{ item.name }}
-    </span>
-
-  </li>
-
-</ul>
-
-<button (click)="deletePurchased()">
-  Remove In-Cart Items
-</button>
+      <button 
+        *ngIf="items.some(i => i.inCart)" 
+        (click)="deletePurchased()" 
+        class="btn btn-secondary">
+        Clear Purchased Items
+      </button>
+    </div>
+  </div>
+</main>

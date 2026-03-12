@@ -12,6 +12,17 @@ export class ListPage implements OnInit {
 
   items: Item[] = [];
   newItem = '';
+  selectedStore = '';
+  
+  stores = [
+    'Aldi',
+    'Central Market',
+    'Costco',
+    'Target',
+    'Trader Joe\'s',
+    'Walmart',
+    'Whole Foods',
+  ];
 
   constructor(private listService: ListService) {}
 
@@ -31,6 +42,7 @@ export class ListPage implements OnInit {
       id: crypto.randomUUID(),
       listId: 'default',
       name: this.newItem,
+      store: this.selectedStore || undefined,
       inCart: false,
       createdAt: new Date()
     };

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header-content">
       <h1 class="logo">🛒 FamShop</h1>
-      <p class="tagline">Totten Family Grocery List</p>
+      <p class="tagline">Totten Family Shopping List</p>
     </div>
   </div>
 </header>
@@ -12,10 +12,19 @@
     <div class="add-item-section">
       <input
         [(ngModel)]="newItem"
-        placeholder="Add grocery item..."
+        placeholder="Add item..."
         class="item-input"
         (keyup.enter)="addItem()"
       />
+      <select
+        [(ngModel)]="selectedStore"
+        class="store-select"
+      >
+        <option value="">Choose store</option>
+        <option *ngFor="let store of stores" [value]="store">
+          {{ store }}
+        </option>
+      </select>
       <button (click)="addItem()" class="btn btn-primary">
         Add Item
       </button>
@@ -31,9 +40,14 @@
               (change)="toggleItem(item.id)"
               class="item-checkbox"
             />
-            <span class="item-name">
-              {{ item.name }}
-            </span>
+            <div class="item-content">
+              <span class="item-name">
+                {{ item.name }}
+              </span>
+              <span class="item-store" *ngIf="item.store">
+                {{ item.store }}
+              </span>
+            </div>
           </label>
         </li>
       </ul>
@@ -46,7 +60,7 @@
         *ngIf="items.some(i => i.inCart)" 
         (click)="deletePurchased()" 
         class="btn btn-secondary">
-        Clear Purchased Items
+        Remove Purchased Items
       </button>
     </div>
   </div>

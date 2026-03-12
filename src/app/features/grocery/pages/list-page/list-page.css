@@ -23,6 +23,8 @@
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
 }
 
 .tagline {
@@ -30,6 +32,7 @@
   opacity: 0.9;
   font-weight: 300;
   margin: 0;
+  font-family: var(--font-body);
 }
 
 .main {
@@ -41,6 +44,29 @@
   display: flex;
   gap: 0.75rem;
   margin-bottom: 2rem;
+}
+
+.store-select {
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  background-color: var(--card-bg);
+  color: var(--white);
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.store-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(109, 0, 26, 0.2);
+}
+
+.store-select option {
+  background-color: var(--card-bg);
+  color: var(--white);
 }
 
 .item-input {
@@ -72,6 +98,8 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: var(--font-body);
+  letter-spacing: -0.01em;
 }
 
 .btn-primary {
@@ -144,6 +172,16 @@
   gap: 0.75rem;
   cursor: pointer;
   user-select: none;
+  width: 100%;
+}
+
+.item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .item-checkbox {
@@ -151,12 +189,28 @@
   height: 20px;
   cursor: pointer;
   accent-color: var(--primary);
+  flex-shrink: 0;
 }
 
 .item-name {
   font-size: 1rem;
   transition: all 0.2s;
   color: var(--white);
+  flex: 1;
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+.item-store {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background-color: var(--dark-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .item.in-cart .item-name {
@@ -177,6 +231,10 @@
 @media (max-width: 640px) {
   .add-item-section {
     flex-direction: column;
+  }
+
+  .store-select {
+    width: 100%;
   }
 
   .btn {

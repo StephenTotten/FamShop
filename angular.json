@@ -19,6 +19,8 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/famshop/browser",
+            "index": "src/index.html",
             "assets": [
               {
                 "glob": "**/*",

@@ -29,10 +29,22 @@ jobs:
         run: npm run build:gh-pages
       
       - name: List build output
-        run: ls -la dist/
+        run: |
+          echo "Listing dist directory:"
+          ls -la dist/ || echo "dist/ not found"
+          echo "Listing current directory:"
+          ls -la
+          echo "Finding index.html:"
+          find . -name "index.html" -type f
       
       - name: Copy index.html to 404.html
-        run: cp ./dist/famshop/browser/index.html ./dist/famshop/browser/404.html
+        run: |
+          if [ -f "dist/famshop/browser/index.html" ]; then
+            cp dist/famshop/browser/index.html dist/famshop/browser/404.html
+          else
+            echo "index.html not found at expected location"
+            exit 1
+          fi
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

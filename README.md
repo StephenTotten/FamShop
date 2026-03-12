@@ -1,59 +1,100 @@
-# Famshop
+# 🛒 Famshop
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+A simple and intuitive family grocery shopping list application built with Angular 21. Keep track of your shopping items, mark them as you add them to your cart, and easily manage your grocery lists.
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+- 📝 Add and manage grocery items
+- ✅ Mark items as "in cart" while shopping
+- 🗑️ Bulk delete purchased items
+- 💾 Persistent storage using browser localStorage
+- 📱 Clean and responsive interface
 
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- npm (v11.9.0 or higher)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-ng serve
+git clone <repository-url>
+cd famshop
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Install dependencies:
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Running the Application
 
+Start the development server:
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+Navigate to `http://localhost:4200/` in your browser. The application will automatically reload when you make changes to the source files.
 
-To build the project run:
+## 🏗️ Project Structure
 
-```bash
-ng build
+```
+src/app/
+├── core/
+│   ├── models/          # Data models (List, Item)
+│   └── services/        # Business logic services
+├── features/
+│   └── grocery/         # Grocery list feature module
+│       ├── pages/       # Page components
+│       └── ...
+└── shared/              # Shared components and utilities
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🛠️ Available Scripts
 
-## Running unit tests
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start development server at `http://localhost:4200/` |
+| `npm run build` | Build the project for production |
+| `npm test` | Run unit tests with Vitest |
+| `npm run watch` | Build and watch for changes |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🧪 Testing
 
+Run unit tests:
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
+This project uses [Vitest](https://vitest.dev/) as the test runner.
 
-For end-to-end (e2e) testing, run:
+## 📦 Building for Production
 
+Create an optimized production build:
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Build artifacts will be stored in the `dist/` directory.
 
-## Additional Resources
+## 🔧 Built With
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular](https://angular.dev/) v21.2.0 - Web framework
+- [TypeScript](https://www.typescriptlang.org/) v5.9.2 - Programming language
+- [RxJS](https://rxjs.dev/) v7.8.0 - Reactive programming library
+- [Vitest](https://vitest.dev/) v4.0.8 - Testing framework
+
+## 📄 License
+
+This project is private and not licensed for public use.
+
+## 🤝 Contributing
+
+This is a family project. For major changes, please discuss with the project maintainers first.
+
+---
+
+Built with ❤️ using Angular CLI v21.2.2

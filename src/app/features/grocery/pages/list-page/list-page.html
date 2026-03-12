@@ -1,0 +1,38 @@
+<h1>FamShop</h1>
+
+<div>
+
+  <input
+    [(ngModel)]="newItem"
+    placeholder="Add grocery item"
+  />
+
+  <button (click)="addItem()">
+    Add
+  </button>
+
+</div>
+
+<hr>
+
+<ul>
+
+  <li *ngFor="let item of items">
+
+    <input
+      type="checkbox"
+      [checked]="item.inCart"
+      (change)="toggleItem(item.id)"
+    />
+
+    <span [style.text-decoration]="item.inCart ? 'line-through' : 'none'">
+      {{ item.name }}
+    </span>
+
+  </li>
+
+</ul>
+
+<button (click)="deletePurchased()">
+  Remove In-Cart Items
+</button>

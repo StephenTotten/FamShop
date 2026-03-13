@@ -62,6 +62,20 @@ src/app/
 | `npm test` | Run unit tests with Vitest |
 | `npm run watch` | Build and watch for changes |
 
+## 🌐 Deploying to GitHub Pages
+
+This repository deploys using GitHub Actions only.
+
+1. Push changes to `main`.
+2. GitHub runs the workflow in `.github/workflows/deploy.yml`.
+3. The site is published at `https://stephentotten.github.io/FamShop/`.
+
+### Important Notes
+
+- The project path is case-sensitive on GitHub Pages. Use `/FamShop/` (not `/famshop/`).
+- Do not use manual `gh-pages` CLI deployment for this repo.
+- If the page looks stale after deploy, hard refresh your browser.
+
 ## 🧪 Testing
 
 Run unit tests:

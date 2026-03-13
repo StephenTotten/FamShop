@@ -26,24 +26,24 @@ jobs:
         run: npm ci
       
       - name: Build
-        run: npx ng build --configuration production --base-href /famshop/ --deploy-url /famshop/
+        run: npx ng build --configuration production --base-href /FamShop/ --deploy-url /FamShop/
       
       - name: List build output
         run: |
           echo "Listing dist directory:"
           ls -la dist/
-          echo "Listing dist/famshop:"
-          ls -la dist/famshop/
+          echo "Listing dist/FamShop:"
+          ls -la dist/FamShop/
           echo "Finding index.html:"
           find dist/ -name "index.html" -type f
       
       - name: Copy index.html to 404.html
-        run: cp dist/famshop/browser/index.html dist/famshop/browser/404.html
+        run: cp dist/FamShop/browser/index.html dist/FamShop/browser/404.html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/famshop/browser
+          path: ./dist/FamShop/browser
 
   deploy:
     environment:

@@ -38,12 +38,12 @@ jobs:
           find dist/ -name "index.html" -type f
       
       - name: Copy index.html to 404.html
-        run: cp dist/famshop/browser/browser/index.html dist/famshop/browser/browser/404.html
+        run: cp dist/famshop/browser/index.html dist/famshop/browser/404.html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/famshop/browser/browser
+          path: ./dist/famshop/browser
 
   deploy:
     environment:

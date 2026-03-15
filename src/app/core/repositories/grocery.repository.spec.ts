@@ -1,13 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { GroceryRepository } from './grocery.repository';
 import { STORAGE_TOKEN } from '../interfaces/storage.interface';
+import { ANY_STORE } from '../models/store.constants';
+import { vi } from 'vitest';
 
 describe('GroceryRepository', () => {
   let repository: GroceryRepository;
-  let mockStorage: any;
+  let mockStorage: {
+    get: ReturnType<typeof vi.fn>;
+    set: ReturnType<typeof vi.fn>;
+    remove: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(() => {
-    mockStorage = jasmine.createSpyObj('IStorage', ['get', 'set', 'remove']);
+    mockStorage = {
+      get: vi.fn(),
+      set: vi.fn(),
+      remove: vi.fn()
+    };
     
     TestBed.configureTestingModule({
       providers: [
@@ -25,7 +35,7 @@ describe('GroceryRepository', () => {
 
   it('should get lists from storage', () => {
     const mockLists = [{ id: '1', name: 'Test List' }];
-    mockStorage.get.and.returnValue(mockLists);
+    mockStorage.get.mockReturnValue(mockLists);
     
     const result = repository.getLists();
     
@@ -38,6 +48,22 @@ describe('GroceryRepository', () => {
     
     repository.saveLists(lists);
     
-    expect(mockStorage.set).toHaveBeenCalledWith(jasmine.any(String), lists);
+    expect(mockStorage.set).toHaveBeenCalledWith(expect.any(String), lists);
+  });
+
+  it('should normalize missing item store values to Any store', () => {
+    mockStorage.get.mockReturnValue([
+      {
+        id: '1',
+        listId: 'default',
+        name: 'Milk',
+        inCart: false,
+        createdAt: new Date()
+      }
+    ]);
+
+    const items = repository.getItems();
+
+    expect(items[0].store).toBe(ANY_STORE);
   });
 });

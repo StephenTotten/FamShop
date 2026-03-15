@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { IStorage, STORAGE_TOKEN } from '../interfaces/storage.interface';
 import { Item } from '../models/item.model';
 import { List } from '../models/list.model';
+import { normalizeStoreValue } from '../models/store.constants';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -23,7 +24,11 @@ export class GroceryRepository {
   }
 
   getItems(): Item[] {
-    return this.storage.get<Item[]>(this.ITEM_KEY) || [];
+    const storedItems = this.storage.get<Item[]>(this.ITEM_KEY) || [];
+    return storedItems.map(item => ({
+      ...item,
+      store: normalizeStoreValue(item.store)
+    }));
   }
 
   saveItems(items: Item[]): void {

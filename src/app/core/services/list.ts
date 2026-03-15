@@ -54,4 +54,18 @@ export class ListService {
 
   }
 
+  updateItemStore(id: string, store: string) {
+
+    const items = this.repo.getItems();
+    const item = items.find(i => i.id === id);
+
+    if (!item) {
+      return;
+    }
+
+    item.store = store;
+    this.repo.saveItems(items);
+
+  }
+
 }

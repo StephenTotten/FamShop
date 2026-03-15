@@ -213,6 +213,44 @@
   letter-spacing: -0.01em;
 }
 
+.item-store-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-store-trigger {
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.item-store-trigger:hover {
+  border-color: var(--primary);
+  color: var(--white);
+}
+
+.item-store-trigger:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(109, 0, 26, 0.25);
+}
+
+.item-store-picker {
+  min-width: 130px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  color: var(--white);
+  padding: 0.25rem 0.5rem;
+}
+
+.item-store-picker:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(109, 0, 26, 0.25);
+}
+
 .item.in-cart .item-name {
   text-decoration: line-through;
   color: var(--text-muted);
@@ -247,5 +285,10 @@
 
   .container {
     padding: 0 1rem;
+  }
+
+  .item-store-controls {
+    width: 100%;
+    justify-content: flex-start;
   }
 }

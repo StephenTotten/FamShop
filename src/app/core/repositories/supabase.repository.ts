@@ -8,9 +8,11 @@ import { List } from '../models/list.model';
 })
 export class SupabaseRepository {
 
-  private client = this.supabase.client;
+  private client;
 
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService) {
+    this.client = supabase.client;
+  }
 
   async getLists(): Promise<List[]> {
     const { data, error } = await this.client.from('lists').select('*');

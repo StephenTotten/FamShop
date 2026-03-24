@@ -20,7 +20,7 @@
         [(ngModel)]="selectedStore"
         class="store-select"
       >
-        <option [value]="anyStoreLabel">{{ anyStoreLabel }}</option>
+        <option value="">Choose store</option>
         <option *ngFor="let store of stores" [value]="store">
           {{ store }}
         </option>
@@ -40,29 +40,13 @@
               (change)="toggleItem(item.id)"
               class="item-checkbox"
             />
-            <div class="item-content">
+              <div class="item-content">
               <span class="item-name">
                 {{ item.name }}
               </span>
-              <div class="item-store-controls" (click)="$event.stopPropagation()">
-                <button
-                  type="button"
-                  class="item-store item-store-trigger"
-                  (click)="toggleStorePicker(item.id, $event)">
-                  {{ item.store }}
-                </button>
-
-                <select
-                  *ngIf="isStorePickerOpen(item.id)"
-                  class="item-store-picker"
-                  [ngModel]="item.store"
-                  (ngModelChange)="setItemStore(item.id, $event)">
-                  <option [value]="anyStoreLabel">{{ anyStoreLabel }}</option>
-                  <option *ngFor="let store of stores" [value]="store">
-                    {{ store }}
-                  </option>
-                </select>
-              </div>
+              <span class="item-store" *ngIf="item.store">
+                {{ item.store }}
+              </span>
             </div>
           </label>
         </li>

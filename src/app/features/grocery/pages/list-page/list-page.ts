@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ListService } from '../../../../core/services/list';
 import { Item } from '../../../../core/models/item.model';
 
@@ -25,14 +25,19 @@ export class ListPage implements OnInit {
     'Safeway'
   ];
 
-  constructor(private listService: ListService) {}
+  constructor(
+    private listService: ListService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  ngOnInit(): void {
-    this.loadItems();
+  async ngOnInit(): Promise<void> {
+    await this.loadItems();
   }
 
   async loadItems() {
-    this.items = await this.listService.getItemsForList('default');
+    const items = await this.listService.getItemsForList('default');
+    this.items = items.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    this.cdr.detectChanges();
   }
 
   async addItem() {

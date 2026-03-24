@@ -31,7 +31,14 @@ export class SupabaseRepository {
       .select('*')
       .eq('list_id', listId);
     if (error) throw error;
-    return data ?? [];
+    return (data ?? []).map(row => ({
+      id: row.id,
+      listId: row.list_id,
+      name: row.name,
+      store: row.store ?? undefined,
+      inCart: row.in_cart,
+      createdAt: new Date(row.created_at)
+    }));
   }
 
   async saveItem(item: Item): Promise<void> {

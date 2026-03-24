@@ -20,7 +20,7 @@
         [(ngModel)]="selectedStore"
         class="store-select"
       >
-        <option value="">Choose store</option>
+        <option value="">Any store</option>
         <option *ngFor="let store of stores" [value]="store">
           {{ store }}
         </option>

@@ -7,7 +7,7 @@ A simple and intuitive family grocery shopping list application built with Angul
 - 📝 Add and manage grocery items
 - ✅ Mark items as "in cart" while shopping
 - 🗑️ Bulk delete purchased items
-- 💾 Persistent storage using browser localStorage
+- 💾 Persistent storage using Supabase free tier
 - 📱 Clean and responsive interface
 
 ## 🚀 Getting Started

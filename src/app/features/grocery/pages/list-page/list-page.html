@@ -20,7 +20,7 @@
         [(ngModel)]="selectedStore"
         class="store-select"
       >
-        <option value="">Any store</option>
+        <option [value]="ANY_STORE">Any store</option>
         <option *ngFor="let store of stores" [value]="store">
           {{ store }}
         </option>
@@ -44,7 +44,7 @@
               <span class="item-name">
                 {{ item.name }}
               </span>
-              <button class="item-store-trigger" (click)="openStorePicker(item.id); $event.stopPropagation()">
+              <button *ngIf="item.store && item.store !== ANY_STORE" class="item-store-trigger" (click)="openStorePicker(item.id); $event.stopPropagation()">
                 {{ item.store || 'Any store' }}
               </button>
               <select
@@ -54,7 +54,7 @@
                 (change)="setItemStore(item.id, $any($event.target).value)"
                 (click)="$event.stopPropagation()"
               >
-                <option value="Any store">Any store</option>
+                <option [value]="ANY_STORE">Any store</option>
                 <option *ngFor="let store of stores" [value]="store">{{ store }}</option>
               </select>
             </div>

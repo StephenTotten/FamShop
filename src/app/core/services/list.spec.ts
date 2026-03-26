@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { GroceryRepository } from '../repositories/grocery.repository';
+import { SupabaseRepository } from '../repositories/supabase.repository';
 import { ListService } from './list';
 import { Item } from '../models/item.model';
 import { ANY_STORE } from '../models/store.constants';
@@ -9,23 +9,19 @@ describe('ListService', () => {
   let service: ListService;
   let repoSpy: {
     getItems: ReturnType<typeof vi.fn>;
-    saveItems: ReturnType<typeof vi.fn>;
-    getLists: ReturnType<typeof vi.fn>;
-    saveLists: ReturnType<typeof vi.fn>;
+    updateItemStore: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(() => {
     repoSpy = {
       getItems: vi.fn(),
-      saveItems: vi.fn(),
-      getLists: vi.fn(),
-      saveLists: vi.fn()
+      updateItemStore: vi.fn()
     };
 
     TestBed.configureTestingModule({
       providers: [
         ListService,
-        { provide: GroceryRepository, useValue: repoSpy as unknown as GroceryRepository }
+        { provide: SupabaseRepository, useValue: repoSpy as unknown as SupabaseRepository }
       ]
     });
 
@@ -36,60 +32,27 @@ describe('ListService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should update the store for the matching item id', () => {
-    const items: Item[] = [
-      {
-        id: '1',
-        listId: 'default',
-        name: 'Milk',
-        store: 'Costco',
-        inCart: false,
-        createdAt: new Date()
-      },
-      {
-        id: '2',
-        listId: 'default',
-        name: 'Eggs',
-        store: 'Target',
-        inCart: false,
-        createdAt: new Date()
-      }
-    ];
+  it('should update the store for the matching item id', async () => {
+    repoSpy.updateItemStore.mockResolvedValue(undefined);
 
-    repoSpy.getItems.mockReturnValue(items);
+    await service.updateItemStore('1', 'Aldi');
 
-    service.updateItemStore('1', 'Aldi');
-
-    expect(items[0].store).toBe('Aldi');
-    expect(items[1].store).toBe('Target');
-    expect(repoSpy.saveItems).toHaveBeenCalledWith(items);
+    expect(repoSpy.updateItemStore).toHaveBeenCalledWith('1', 'Aldi');
   });
 
-  it('should set the store to Any store when selected', () => {
-    const items: Item[] = [
-      {
-        id: '1',
-        listId: 'default',
-        name: 'Bread',
-        store: 'Walmart',
-        inCart: false,
-        createdAt: new Date()
-      }
-    ];
+  it('should set the store to Any store when selected', async () => {
+    repoSpy.updateItemStore.mockResolvedValue(undefined);
 
-    repoSpy.getItems.mockReturnValue(items);
+    await service.updateItemStore('1', ANY_STORE);
 
-    service.updateItemStore('1', ANY_STORE);
-
-    expect(items[0].store).toBe(ANY_STORE);
-    expect(repoSpy.saveItems).toHaveBeenCalledWith(items);
+    expect(repoSpy.updateItemStore).toHaveBeenCalledWith('1', ANY_STORE);
   });
 
-  it('should not save when item id is not found', () => {
-    repoSpy.getItems.mockReturnValue([]);
+  it('should not save when item id is not found', async () => {
+    repoSpy.updateItemStore.mockResolvedValue(undefined);
 
-    service.updateItemStore('missing', 'Aldi');
+    await service.updateItemStore('missing', 'Aldi');
 
-    expect(repoSpy.saveItems).not.toHaveBeenCalled();
+    expect(repoSpy.updateItemStore).toHaveBeenCalledWith('missing', 'Aldi');
   });
 });

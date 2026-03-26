@@ -38,12 +38,12 @@ describe('ListPage', () => {
       }
     ];
 
-    listServiceSpy.getItemsForList.mockReturnValue(baseItems);
+    listServiceSpy.getItemsForList.mockResolvedValue(baseItems);
 
-    listServiceSpy.addItem.mockReturnValue(undefined);
-    listServiceSpy.toggleItem.mockReturnValue(undefined);
-    listServiceSpy.deleteInCartItems.mockReturnValue(undefined);
-    listServiceSpy.updateItemStore.mockReturnValue(undefined);
+    listServiceSpy.addItem.mockResolvedValue(undefined);
+    listServiceSpy.toggleItem.mockResolvedValue(undefined);
+    listServiceSpy.deleteInCartItems.mockResolvedValue(undefined);
+    listServiceSpy.updateItemStore.mockResolvedValue(undefined);
 
     await TestBed.configureTestingModule({
       imports: [GroceryModule],

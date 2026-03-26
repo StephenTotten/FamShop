@@ -61,6 +61,14 @@ export class SupabaseRepository {
     if (error) throw error;
   }
 
+  async updateItemStore(itemId: string, store: string): Promise<void> {
+    const { error } = await this.client
+      .from('items')
+      .update({ store })
+      .eq('id', itemId);
+    if (error) throw error;
+  }
+
   async deleteInCartItems(listId: string): Promise<void> {
     const { error } = await this.client
       .from('items')

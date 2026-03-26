@@ -11,6 +11,7 @@ import { ANY_STORE } from '../../../../core/models/store.constants';
 })
 export class ListPage implements OnInit {
 
+  readonly ANY_STORE = ANY_STORE;
   items: Item[] = [];
   newItem = '';
   selectedStore = ANY_STORE;
@@ -29,43 +30,43 @@ export class ListPage implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
-    this.loadItems();
+  async ngOnInit(): Promise<void> {
+    await this.loadItems();
   }
 
-  loadItems() {
-    const items = this.listService.getItemsForList('default');
+  async loadItems() {
+    const items = await this.listService.getItemsForList('default');
     this.items = items.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     this.cdr.detectChanges();
   }
 
-  addItem() {
+  async addItem() {
     if (!this.newItem.trim()) return;
 
     const item: Item = {
       id: crypto.randomUUID(),
       listId: 'default',
       name: this.newItem,
-      store: this.selectedStore || undefined,
+      store: this.selectedStore === ANY_STORE ? undefined : this.selectedStore,
       inCart: false,
       createdAt: new Date()
     };
 
-    this.listService.addItem(item);
+    await this.listService.addItem(item);
     this.newItem = '';
-    this.loadItems();
+    await this.loadItems();
   }
 
-  toggleItem(id: string) {
+  async toggleItem(id: string) {
     const item = this.items.find(i => i.id === id);
     if (!item) return;
-    this.listService.toggleItem(item);
-    this.loadItems();
+    await this.listService.toggleItem(item);
+    await this.loadItems();
   }
 
-  deletePurchased() {
-    this.listService.deleteInCartItems('default');
-    this.loadItems();
+  async deletePurchased() {
+    await this.listService.deleteInCartItems('default');
+    await this.loadItems();
   }
 
   openStorePicker(itemId: string) {

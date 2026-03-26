@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GroceryRepository } from '../repositories/grocery.repository';
+import { SupabaseRepository } from '../repositories/supabase.repository';
 import { Item } from '../models/item.model';
 import { List } from '../models/list.model';
 
@@ -8,43 +8,31 @@ import { List } from '../models/list.model';
 })
 export class ListService {
 
-  constructor(private repo: GroceryRepository) {}
+  constructor(private repo: SupabaseRepository) {}
 
-  getLists(): List[] {
+  getLists(): Promise<List[]> {
     return this.repo.getLists();
   }
 
-  saveList(list: List): void {
-    return this.repo.saveLists([list]);
+  getItemsForList(listId: string): Promise<Item[]> {
+    return this.repo.getItems(listId);
   }
 
-  getItemsForList(listId: string): Item[] {
-    return this.repo.getItems();
+  addItem(item: Item): Promise<void> {
+    return this.repo.saveItem(item);
   }
 
-  addItem(item: Item): void {
-    const items = this.repo.getItems();
-    this.repo.saveItems([...items, item]);
+  async toggleItem(item: Item): Promise<void> {
+    item.inCart = !item.inCart;
+    return this.repo.updateItem(item);
   }
 
-  toggleItem(item: Item): void {
-    const items = this.repo.getItems();
-    const found = items.find(i => i.id === item.id);
-    if (found) found.inCart = !found.inCart;
-    this.repo.saveItems(items);
+  deleteInCartItems(listId: string): Promise<void> {
+    return this.repo.deleteInCartItems(listId);
   }
 
-  deleteInCartItems(listId: string): void {
-    const items = this.repo.getItems().filter(i => !i.inCart);
-    this.repo.saveItems(items);
-  }
-
-  updateItemStore(itemId: string, store: string): void {
-    const items = this.repo.getItems();
-    const item = items.find(i => i.id === itemId);
-    if (!item) return;
-    item.store = store;
-    this.repo.saveItems(items);
+  async updateItemStore(itemId: string, store: string): Promise<void> {
+    return this.repo.updateItemStore(itemId, store);
   }
 
 }

@@ -28,9 +28,9 @@
 }
 
 .tagline {
-  font-size: 0.90rem;
+  font-size: 0.7rem;
   opacity: 0.9;
-  font-weight: 400;
+  font-weight: 600;
   margin: 0;
   font-family: var(--font-body);
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { ListService } from '../../../../core/services/list';
 import { Item } from '../../../../core/models/item.model';
+import { ANY_STORE } from '../../../../core/models/store.constants';
 
 @Component({
   selector: 'app-list-page',
@@ -12,17 +13,15 @@ export class ListPage implements OnInit {
 
   items: Item[] = [];
   newItem = '';
-  selectedStore = '';
+  selectedStore = ANY_STORE;
+  activeStorePickerItemId: string | null = null;
 
   stores = [
     'Walmart',
     'Target',
-    'Kroger',
     'Costco',
-    'Whole Foods',
     'Trader Joe\'s',
-    'Aldi',
-    'Safeway'
+    'Aldi'
   ];
 
   constructor(
@@ -30,17 +29,17 @@ export class ListPage implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.loadItems();
+  ngOnInit(): void {
+    this.loadItems();
   }
 
-  async loadItems() {
-    const items = await this.listService.getItemsForList('default');
+  loadItems() {
+    const items = this.listService.getItemsForList('default');
     this.items = items.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     this.cdr.detectChanges();
   }
 
-  async addItem() {
+  addItem() {
     if (!this.newItem.trim()) return;
 
     const item: Item = {
@@ -52,21 +51,39 @@ export class ListPage implements OnInit {
       createdAt: new Date()
     };
 
-    await this.listService.addItem(item);
+    this.listService.addItem(item);
     this.newItem = '';
-    await this.loadItems();
+    this.loadItems();
   }
 
-  async toggleItem(id: string) {
+  toggleItem(id: string) {
     const item = this.items.find(i => i.id === id);
     if (!item) return;
-    await this.listService.toggleItem(item);
-    await this.loadItems();
+    this.listService.toggleItem(item);
+    this.loadItems();
   }
 
-  async deletePurchased() {
-    await this.listService.deleteInCartItems('default');
-    await this.loadItems();
+  deletePurchased() {
+    this.listService.deleteInCartItems('default');
+    this.loadItems();
+  }
+
+  openStorePicker(itemId: string) {
+    this.activeStorePickerItemId = itemId;
+  }
+
+  setItemStore(itemId: string, store: string) {
+    this.activeStorePickerItemId = null;
+    this.listService.updateItemStore(itemId, store);
+    this.loadItems();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.item-store-trigger') && !target.closest('.item-store-picker')) {
+      this.activeStorePickerItemId = null;
+    }
   }
 
 }

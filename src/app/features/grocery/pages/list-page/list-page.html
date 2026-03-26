@@ -44,9 +44,19 @@
               <span class="item-name">
                 {{ item.name }}
               </span>
-              <span class="item-store" *ngIf="item.store">
-                {{ item.store }}
-              </span>
+              <button class="item-store-trigger" (click)="openStorePicker(item.id); $event.stopPropagation()">
+                {{ item.store || 'Any store' }}
+              </button>
+              <select
+                *ngIf="activeStorePickerItemId === item.id"
+                class="item-store-picker"
+                [value]="item.store"
+                (change)="setItemStore(item.id, $any($event.target).value)"
+                (click)="$event.stopPropagation()"
+              >
+                <option value="Any store">Any store</option>
+                <option *ngFor="let store of stores" [value]="store">{{ store }}</option>
+              </select>
             </div>
           </label>
         </li>

@@ -1,6 +1,6 @@
 {
   "name": "famshop",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -32,6 +32,7 @@
     "vitest": "^4.0.8"
   },
   "overrides": {
-    "undici": "7.24.5"
+    "undici": "7.24.5",
+    "picomatch": "4.0.4"
   }
 }

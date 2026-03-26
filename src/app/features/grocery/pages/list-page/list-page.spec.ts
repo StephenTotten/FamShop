@@ -40,6 +40,11 @@ describe('ListPage', () => {
 
     listServiceSpy.getItemsForList.mockReturnValue(baseItems);
 
+    listServiceSpy.addItem.mockReturnValue(undefined);
+    listServiceSpy.toggleItem.mockReturnValue(undefined);
+    listServiceSpy.deleteInCartItems.mockReturnValue(undefined);
+    listServiceSpy.updateItemStore.mockReturnValue(undefined);
+
     await TestBed.configureTestingModule({
       imports: [GroceryModule],
       providers: [

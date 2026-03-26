@@ -210,7 +210,7 @@
   font-weight: 400;
 }
 
-.item-store {
+.item-store-trigger {
   font-size: 0.85rem;
   color: var(--text-muted);
   background-color: var(--dark-bg);
@@ -220,16 +220,6 @@
   font-family: var(--font-body);
   font-weight: 600;
   letter-spacing: -0.01em;
-}
-
-.item-store-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.item-store-trigger {
   border: 1px solid transparent;
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s, color 0.2s;

@@ -37,7 +37,8 @@ export class SupabaseRepository {
       name: row.name,
       store: row.store ?? undefined,
       inCart: row.in_cart,
-      createdAt: new Date(row.created_at)
+      createdAt: new Date(row.created_at),
+      sortOrder: row.sort_order ?? 0
     }));
   }
 
@@ -48,9 +49,18 @@ export class SupabaseRepository {
       name: item.name,
       store: item.store,
       in_cart: item.inCart,
-      created_at: item.createdAt
+      created_at: item.createdAt,
+      sort_order: item.sortOrder ?? 0
     });
     if (error) throw error;
+  }
+
+  async updateItemOrders(updates: { id: string; sortOrder: number }[]): Promise<void> {
+    await Promise.all(
+      updates.map(({ id, sortOrder }) =>
+        this.client.from('items').update({ sort_order: sortOrder }).eq('id', id)
+      )
+    );
   }
 
   async updateItem(item: Item): Promise<void> {

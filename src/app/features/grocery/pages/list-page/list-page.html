@@ -32,7 +32,17 @@
 
     <div class="items-section">
       <ul class="items-list">
-        <li *ngFor="let item of items" class="item" [class.in-cart]="item.inCart">
+        <li
+          *ngFor="let item of items; let i = index"
+          class="item"
+          [class.in-cart]="item.inCart"
+          [class.dragging]="dragSrcIndex === i"
+          draggable="true"
+          (dragstart)="onDragStart(i)"
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop($event, i)"
+          (dragend)="onDragEnd()"
+        >
           <label class="item-label">
             <input
               type="checkbox"

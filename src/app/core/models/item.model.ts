@@ -5,4 +5,5 @@ export interface Item {
   store?: string;
   inCart: boolean;
   createdAt: Date;
+  sortOrder?: number;
 }

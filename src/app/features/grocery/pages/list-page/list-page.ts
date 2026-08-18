@@ -16,6 +16,7 @@ export class ListPage implements OnInit {
   newItem = '';
   selectedStore = ANY_STORE;
   activeStorePickerItemId: string | null = null;
+  dragSrcIndex: number | null = null;
 
   stores = [
     'Walmart',
@@ -36,7 +37,7 @@ export class ListPage implements OnInit {
 
   async loadItems() {
     const items = await this.listService.getItemsForList('default');
-    this.items = items.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    this.items = items.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
     this.cdr.detectChanges();
   }
 
@@ -49,7 +50,8 @@ export class ListPage implements OnInit {
       name: this.newItem,
       store: this.selectedStore === ANY_STORE ? undefined : this.selectedStore,
       inCart: false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      sortOrder: this.items.length
     };
 
     await this.listService.addItem(item);
@@ -77,6 +79,34 @@ export class ListPage implements OnInit {
     this.activeStorePickerItemId = null;
     this.listService.updateItemStore(itemId, store);
     this.loadItems();
+  }
+
+  onDragStart(index: number) {
+    this.dragSrcIndex = index;
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  async onDrop(event: DragEvent, targetIndex: number) {
+    event.preventDefault();
+    if (this.dragSrcIndex === null || this.dragSrcIndex === targetIndex) return;
+
+    const reordered = [...this.items];
+    const [moved] = reordered.splice(this.dragSrcIndex, 1);
+    reordered.splice(targetIndex, 0, moved);
+
+    this.items = reordered;
+    this.dragSrcIndex = null;
+    this.cdr.detectChanges();
+
+    const updates = reordered.map((item, i) => ({ id: item.id, sortOrder: i }));
+    await this.listService.updateItemOrders(updates);
+  }
+
+  onDragEnd() {
+    this.dragSrcIndex = null;
   }
 
   @HostListener('document:click', ['$event'])

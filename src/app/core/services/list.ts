@@ -35,4 +35,8 @@ export class ListService {
     return this.repo.updateItemStore(itemId, store);
   }
 
+  async updateItemOrders(updates: { id: string; sortOrder: number }[]): Promise<void> {
+    return this.repo.updateItemOrders(updates);
+  }
+
 }

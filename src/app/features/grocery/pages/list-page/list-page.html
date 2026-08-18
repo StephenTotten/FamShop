@@ -39,11 +39,12 @@
           [class.dragging]="dragSrcIndex === i"
           draggable="true"
           (dragstart)="onDragStart(i)"
-          (dragover)="onDragOver($event)"
-          (drop)="onDrop($event, i)"
+          (dragover)="onDragOver($event, i)"
+          (drop)="onDrop($event)"
           (dragend)="onDragEnd()"
         >
           <label class="item-label">
+            <span class="drag-handle">⠿</span>
             <input
               type="checkbox"
               [checked]="item.inCart"

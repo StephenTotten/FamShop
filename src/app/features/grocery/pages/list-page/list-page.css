@@ -156,7 +156,7 @@
   background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1rem;
-  transition: all 0.2s;
+  transition: background-color 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
   border: 2px solid var(--border);
   cursor: grab;
 }
@@ -166,8 +166,9 @@
 }
 
 .item.dragging {
-  opacity: 0.4;
+  opacity: 0.35;
   border-style: dashed;
+  transform: scale(0.98);
 }
 
 .item:hover {
@@ -179,6 +180,15 @@
 .item.in-cart {
   opacity: 0.5;
   background-color: #151515;
+}
+
+.drag-handle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: grab;
+  flex-shrink: 0;
+  padding-right: 0.25rem;
+  user-select: none;
 }
 
 .item-label {

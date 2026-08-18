@@ -17,6 +17,7 @@ export class ListPage implements OnInit {
   selectedStore = ANY_STORE;
   activeStorePickerItemId: string | null = null;
   dragSrcIndex: number | null = null;
+  dragOverIndex: number | null = null;
 
   stores = [
     'Walmart',
@@ -85,28 +86,30 @@ export class ListPage implements OnInit {
     this.dragSrcIndex = index;
   }
 
-  onDragOver(event: DragEvent) {
+  onDragOver(event: DragEvent, targetIndex: number) {
     event.preventDefault();
-  }
+    if (this.dragSrcIndex === null || this.dragSrcIndex === targetIndex || this.dragOverIndex === targetIndex) return;
 
-  async onDrop(event: DragEvent, targetIndex: number) {
-    event.preventDefault();
-    if (this.dragSrcIndex === null || this.dragSrcIndex === targetIndex) return;
-
+    this.dragOverIndex = targetIndex;
     const reordered = [...this.items];
     const [moved] = reordered.splice(this.dragSrcIndex, 1);
     reordered.splice(targetIndex, 0, moved);
-
+    this.dragSrcIndex = targetIndex;
     this.items = reordered;
-    this.dragSrcIndex = null;
     this.cdr.detectChanges();
+  }
 
-    const updates = reordered.map((item, i) => ({ id: item.id, sortOrder: i }));
+  async onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.dragOverIndex = null;
+    this.dragSrcIndex = null;
+    const updates = this.items.map((item, i) => ({ id: item.id, sortOrder: i }));
     await this.listService.updateItemOrders(updates);
   }
 
   onDragEnd() {
     this.dragSrcIndex = null;
+    this.dragOverIndex = null;
   }
 
   @HostListener('document:click', ['$event'])
